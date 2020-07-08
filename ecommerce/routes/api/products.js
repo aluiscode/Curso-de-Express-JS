@@ -1,44 +1,73 @@
 const express= require('express');
 const router= express.Router();
-const productMocks = require('../../utils/mock/products')
+const ProductsService = require('../../services/products')
 
-router.get('/', function(req,res){
-  const query = req.query;
-  res.status(200).json({
-      data: productMocks,
-      message: 'Products listed'
-  });
+const productsService = new ProductsService();
+
+router.get('/', async(req, res, next) => {
+  const { tags } = req.query;
+  try {
+    const products = await productsService.getProducts({tags});
+    res.status(200).json({
+        data: products,
+        message: 'Products listed'
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.get('/:id', function(req,res){
+router.get('/:id', async(req, res, next) => {
   const { id } = req.params;
-  res.status(200).json({
-      data: productMocks[0],
-      message: 'Products retrived'
-  });
+  try {
+    const product = await productsService.getProduct({id});
+    res.status(200).json({
+        data: product,
+        message: 'Products retrived'
+    });
+  } catch (error) {
+    next(error)
+  }
 });
 
-router.post('/', function(req,res){
-  res.status(201).json({
-      data: productMocks[0],
-      message: 'Products listed'
-  });
+router.post('/', async(req, res, next) => {
+  const {body: data} = req;
+  try {
+    const product = await productsService.createProduct({data});
+    res.status(201).json({
+        data: product,
+        message: 'Products listed'
+    });
+  } catch (error) {
+    next(error)
+  }
 });
 
-router.put('/:id', function(req,res){
+router.put('/:id', async(req, res, next) => {
   const {id} = req.params;
-  res.status(200).json({
-      data: productMocks,
-      message: 'Products updated'
-  });
+  const {body: data} = req;
+  try {
+    const product = await productsService.updateProduct({id, data});
+    res.status(200).json({
+        data: product,
+        message: 'Products updated'
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.delete('/:id', function(req,res){
+router.delete('/:id', async(req, res, next) => {
   const {id} = req.params;
-  res.status(200).json({
-      data: productMocks[0],
-      message: 'Products Deleted'
-  });
+  try {
+    const product = await productsService.deleteProduct({id});
+    res.status(200).json({
+        data: product,
+        message: 'Products Deleted'
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
