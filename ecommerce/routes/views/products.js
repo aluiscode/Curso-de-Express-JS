@@ -2,12 +2,17 @@ const express = require('express');
 const router = express.Router();
 const ProductsService = require('../../services/products');
 
-const productsService = new ProductsService();
+const productService = new ProductsService();
 
-router.get('/', async(req, res) => {
+router.get('/', async(req, res, next) => {
   const { tags } = req.query;
-  const products = await productsService.getProducts({tags})
-  res.render('products', { products });
+  try{
+    throw new Error('This is an error from the API')
+    const products = await productService.getProducts({ tags });
+    res.render('products', { products });
+  }catch(error){
+    next(error);
+  }
 })
 
 module.exports = router;

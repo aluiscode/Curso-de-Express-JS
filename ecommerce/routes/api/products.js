@@ -7,6 +7,7 @@ const productsService = new ProductsService();
 router.get('/', async(req, res, next) => {
   const { tags } = req.query;
   try {
+    throw new Error('This is an error from API')
     const products = await productsService.getProducts({tags});
     res.status(200).json({
         data: products,
