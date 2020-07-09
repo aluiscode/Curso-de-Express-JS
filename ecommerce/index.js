@@ -1,13 +1,16 @@
 const express = require('express');
 const path = require('path');
-const productsRouter = require('./routes/views/products')
-const productsApiRouter = require('./routes/api/products')
+const productsRouter = require('./routes/views/products');
+const productsApiRouter = require('./routes/api/products');
+const bodyParser = require('body-parser');
+
 
 // app
 const app = express();
 
 // middlewares
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
 
 // static files
 app.use('/static', express.static(path.join(__dirname, 'public')));

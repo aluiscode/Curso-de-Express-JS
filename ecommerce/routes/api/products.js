@@ -33,7 +33,7 @@ router.get('/:id', async(req, res, next) => {
 router.post('/', async(req, res, next) => {
   const {body: data} = req;
   try {
-    const createdProduct = await productsService.createProduct({data});
+    const createdProduct = await productsService.createProduct(data);
     res.status(201).json({
         data: createdProduct,
         message: 'Products listed'

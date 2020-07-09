@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const config = require('../config');
 
 const USER = encodeURIComponent(config.dbUser);
@@ -49,7 +49,6 @@ class MongoLib{
       .then(db => {
         return db.collection(collection).insertOne(data);
       })
-      .then(result => result.insertedId);
   }
 
   update(collection, id, data) {
