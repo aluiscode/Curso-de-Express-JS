@@ -6,7 +6,6 @@ function withErrorStack(err, stack) {
   if(config.dev){
     return { ...err, stack } //Object.asing
   }
-  return err;
 };
 
 function logErrors(err, req, res, next) {
