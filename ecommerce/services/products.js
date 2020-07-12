@@ -22,7 +22,7 @@ class ProductsService{
     return createdProductId;
   }
 
-  async updateProduct({id, product}){
+  async updateProduct(id, product){
     const updatedProductId = await this.mongoDB.update(this.collection, id, product)
     return updatedProductId;
   }
