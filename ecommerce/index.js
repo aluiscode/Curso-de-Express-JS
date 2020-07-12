@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const boom = require('@hapi/boom');
 const debug = require('debug')('app:server');
+const helmet = require('helmet');
 const productsRouter = require('./routes/views/products');
 const productsApiRouter = require('./routes/api/products');
 const authApiRouter = require('./routes/api/auth');
@@ -17,6 +18,7 @@ const isRequestAjaxOrApi = require('./utils/isRequestAjaxOrApi');
 const app = express();
 
 // middlewares
+app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
@@ -57,3 +59,19 @@ app.use(errorHandler);
 const server = app.listen(3000, () => {
   debug(`I\'m listening you http://localhost:${server.address().port}`)
 })
+
+const express = require("express");
+const cors = require("cors");
+const app = express();
+
+const corsOptions = { origin: "http://example.com" };
+
+app.use(cors(corsOptions));
+
+app.get("/products/:id", function(req, res, next) {
+  res.json({ msg: "This is CORS-enabled for only example.com." });
+});
+
+app.listen(8000, function() {
+  console.log("CORS-enabled web server listening on port 8000");
+});
