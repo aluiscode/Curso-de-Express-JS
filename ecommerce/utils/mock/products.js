@@ -74,7 +74,7 @@ class ProductsServiceMock {
   }
 
   async createProduct() {
-    return Promise.resolve("6bedb1267d1ca7f3053e2875");
+    return Promise.resolve('6bedb1267d1ca7f3053e2875');
   }
 }
 
